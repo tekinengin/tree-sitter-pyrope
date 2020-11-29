@@ -745,7 +745,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_boolean"
+          "name": "boolean"
         },
         {
           "type": "SYMBOL",
@@ -753,7 +753,7 @@
         }
       ]
     },
-    "_boolean": {
+    "boolean": {
       "type": "CHOICE",
       "members": [
         {
@@ -1206,30 +1206,22 @@
       "value": "[a-zA-Z0-9][^']"
     },
     "decimaldigit": {
-      "type": "PREC_LEFT",
-      "value": 0,
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "PATTERN",
-                "value": "[0-9]+"
-              }
-            ]
-          }
-        ]
-      }
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[0-9]+"
+            }
+          ]
+        }
+      ]
     },
     "_lineterminator": {
       "type": "CHOICE",
       "members": [
-        {
-          "type": "STRING",
-          "value": " "
-        },
         {
           "type": "STRING",
           "value": "\n"
@@ -1251,10 +1243,6 @@
     "_lineterminatorsequence": {
       "type": "CHOICE",
       "members": [
-        {
-          "type": "STRING",
-          "value": " "
-        },
         {
           "type": "STRING",
           "value": "\n"
@@ -1299,7 +1287,7 @@
         },
         {
           "type": "PATTERN",
-          "value": "[a-zA-Z0-9]+"
+          "value": "[a-zA-Z0-9]*"
         },
         {
           "type": "STRING",
@@ -1316,7 +1304,7 @@
         },
         {
           "type": "PATTERN",
-          "value": "[a-zA-Z0-9]+"
+          "value": "[ a-zA-Z0-9]*"
         }
       ]
     },

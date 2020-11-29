@@ -30,11 +30,11 @@ module.exports = grammar({
     _codeblockint: $ => seq(
       //$._SS,
       choice(
-        $.ifstatement,
+        //$.ifstatement,
         $.assignmentexpression) // in progress)
     ),
 
-    _scopedeclaration: $ => seq(
+    /*_scopedeclaration: $ => seq(
       $._scope,
       $,_LBRACE,
       chioce($._EOS),
@@ -56,7 +56,7 @@ module.exports = grammar({
       choice($._EOS),
       //$._SS,
       $._RBRACE
-    ),
+    ),*/
 
     assignmentexpression: $ => seq(
       choice(
@@ -240,14 +240,14 @@ module.exports = grammar({
     ),
 
     _numericalconstant: $ => choice(
-      $._boolean,
+      $.boolean,
       //$._hexadecimal,
       //$._binary,
       //$._decimalsigned,
       $.decimaldigit
     ),
 
-    _boolean: $ => choice(
+    boolean: $ => choice(
       'true',
       'TRUE',
       'false',
@@ -462,14 +462,14 @@ module.exports = grammar({
         ))
     ),*/
 
-    decimaldigit: $ => prec.left(choice(
+    decimaldigit: $ => choice(
       seq(
         /[0-9]+/
         //optional('-'),
         ///[0-9]/,
         //repeat(choice(/[0-9]/, '_'))) // probably wrong
       //'?'
-    ))),
+    )),
 
     /*_binarydigit: $ => repeat1(choice(
       //'"',
@@ -496,7 +496,6 @@ module.exports = grammar({
     ),*/
 
     _lineterminator: $ => choice(
-      ' ',
       String.fromCharCode(parseInt('A', 16)),
       String.fromCharCode(parseInt('D', 16)),
       String.fromCharCode(parseInt('2028', 16)),
@@ -504,7 +503,6 @@ module.exports = grammar({
     ),    
 
     _lineterminatorsequence: $ => choice(
-      ' ',
       String.fromCharCode(parseInt('A', 16)),
       String.fromCharCode(parseInt('2028', 16)),
       String.fromCharCode(parseInt('2029', 16)),
@@ -515,13 +513,13 @@ module.exports = grammar({
 
     _multilinecomment: $ => seq(
       '/*',
-      /[a-zA-Z0-9]+/,
+      /[a-zA-Z0-9]*/,
       '*/'
     ),
 
     _singlelinecomment: $ => seq(
       '//', 
-      /[a-zA-Z0-9]+/ // ADD line terminator as exception
+      /[ a-zA-Z0-9]*/ // ADD line terminator as exception
     ), 
 
 

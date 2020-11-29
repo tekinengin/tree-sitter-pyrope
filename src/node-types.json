@@ -35,6 +35,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "decimaldigit",
           "named": true
         },
@@ -68,6 +72,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "boolean",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "decimaldigit",
@@ -152,6 +161,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "decimaldigit",
           "named": true
         },
@@ -172,10 +185,6 @@
   },
   {
     "type": "\r",
-    "named": false
-  },
-  {
-    "type": " ",
     "named": false
   },
   {
