@@ -10,29 +10,44 @@ module.exports = grammar({
       $.lineterminator,
       $.lineterminatorsequence,
       $._whitespace,
-      $.numericalconstant
+      $.lhsvarname
     )),
 
+    lhsvarname: $ => choice($.identifier, $.constant),
 
-/****************************NUMERIC CONSTANTS*****************************/    
+/***************************IDENTIFIER*****************************/
+    
+    identifier: $ => /[!-]?[a-zA-Z%$#]{1}[a-zA-Z0-9]*[?]?/,
+    //idprefix: $ => /[!-]{1}/,
+    //idnondigit: $ => /[a-zA-Z%$#]{1}/,
+    //idchar: $ => /[a-zA-Z0-9]{1}/,
 
-    numericalconstant: $ => choice(
-      $.boolean,
-      $.hexadecimal,
-      $.binary,
-      $.decimalsigned,
-      $.decimaldigit
+/****************************CONSTANTS*****************************/    
+
+    constant: $ => choice($._stringconstant, $._numericalconstant),
+
+    _stringconstant: $ => choice(
+      /'(.*[^'\n\r\u2028\u2029])'/,
+      /"(.*[^'\n\r\u2028\u2029])"/
+    ),
+
+    _numericalconstant: $ => choice(
+      $._boolean,
+      $._hexadecimal,
+      $._binary,
+      $._decimalsigned,
+      $._decimaldigit
     ),
   
-    boolean: $ => choice(
+    _boolean: $ => choice(
       'true',
       'TRUE',
       'false',
       'FALSE'
     ),
 
-    decimalsigned: $ => seq(
-      $.decimaldigit,
+    _decimalsigned: $ => seq(
+      $._decimaldigit,
       choice('s', 'u'),
       optional(seq(
         /[0-9_]+/,
@@ -40,12 +55,12 @@ module.exports = grammar({
       )),
     ),
 
-    decimaldigit: $ => choice(
+    _decimaldigit: $ => choice(
       /\?/,
       /[-]?[0-9]{1}[0-9_]*/
     ),
 
-    binary: $ => seq(
+    _binary: $ => seq(
       '0b',
       $._binarydigit,
       optional(seq(
@@ -59,7 +74,7 @@ module.exports = grammar({
 
     _binarydigit: $ => /["?0-1_]+/,
 
-    hexadecimal: $ => seq(
+    _hexadecimal: $ => seq(
       '0x',
       $._hexdigit,
       optional(seq(
@@ -85,21 +100,20 @@ module.exports = grammar({
 
 /****************************COMMENT*****************************/
     comment: $ => choice(
-      $.multilinecomment,
-      $.singlelinecomment
+      $._multilinecomment,
+      $._singlelinecomment
     ),
 
-    multilinecomment: $ => seq(
+    _multilinecomment: $ => seq(
       '/*',
-      /[a-zA-Z0-9 \s]*/,
+      /[\w\d\s]*/,
       '*/'
     ),
 
-    singlelinecomment: $ => seq(
+    _singlelinecomment: $ => seq(
       '//',
-      /[a-zA-Z0-9 ]*/
+      /[\w\d ]*/
     ),
 
   }
 });
-
