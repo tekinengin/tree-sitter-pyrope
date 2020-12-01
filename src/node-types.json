@@ -1,37 +1,78 @@
 [
   {
-    "type": "additiveexpression",
+    "type": "binary",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "boolean",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "comment",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
-          "type": "bitwiseexpression",
+          "type": "multilinecomment",
           "named": true
         },
         {
-          "type": "ddot",
+          "type": "singlelinecomment",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "assignmentexpression",
+    "type": "decimaldigit",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "decimalsigned",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
-          "type": "assignmentexpression",
+          "type": "decimaldigit",
           "named": true
-        },
+        }
+      ]
+    }
+  },
+  {
+    "type": "hexadecimal",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "lineterminatorsequence",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "multilinecomment",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "numericalconstant",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
         {
-          "type": "assignmentoperator",
+          "type": "binary",
           "named": true
         },
         {
@@ -43,95 +84,20 @@
           "named": true
         },
         {
-          "type": "identifier",
+          "type": "decimalsigned",
           "named": true
         },
         {
-          "type": "logicalexpression",
+          "type": "hexadecimal",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "assignmentoperator",
+    "type": "singlelinecomment",
     "named": true,
     "fields": {}
-  },
-  {
-    "type": "bitwiseexpression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "multiplicativeexpression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "boolean",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "decimaldigit",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "identifier",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "logicalexpression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "relationalexpression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "multiplicativeexpression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "unaryexpression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "relationalexpression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "additiveexpression",
-          "named": true
-        }
-      ]
-    }
   },
   {
     "type": "start",
@@ -142,113 +108,26 @@
       "required": false,
       "types": [
         {
-          "type": "assignmentexpression",
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "lineterminator",
+          "named": true
+        },
+        {
+          "type": "lineterminatorsequence",
+          "named": true
+        },
+        {
+          "type": "numericalconstant",
           "named": true
         }
       ]
     }
-  },
-  {
-    "type": "unaryexpression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "assignmentexpression",
-          "named": true
-        },
-        {
-          "type": "boolean",
-          "named": true
-        },
-        {
-          "type": "decimaldigit",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "logicalexpression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "\n",
-    "named": false
-  },
-  {
-    "type": "\r",
-    "named": false
-  },
-  {
-    "type": "!",
-    "named": false
-  },
-  {
-    "type": "!=",
-    "named": false
-  },
-  {
-    "type": "\"",
-    "named": false
-  },
-  {
-    "type": "%",
-    "named": false
-  },
-  {
-    "type": "&",
-    "named": false
-  },
-  {
-    "type": "'",
-    "named": false
-  },
-  {
-    "type": "(",
-    "named": false
-  },
-  {
-    "type": ")",
-    "named": false
-  },
-  {
-    "type": "*",
-    "named": false
-  },
-  {
-    "type": "**",
-    "named": false
   },
   {
     "type": "*/",
-    "named": false
-  },
-  {
-    "type": "+",
-    "named": false
-  },
-  {
-    "type": "++",
-    "named": false
-  },
-  {
-    "type": ",",
-    "named": false
-  },
-  {
-    "type": "-",
-    "named": false
-  },
-  {
-    "type": "/",
     "named": false
   },
   {
@@ -260,71 +139,11 @@
     "named": false
   },
   {
-    "type": "/=",
+    "type": "0b",
     "named": false
   },
   {
-    "type": ":!=",
-    "named": false
-  },
-  {
-    "type": ":<",
-    "named": false
-  },
-  {
-    "type": ":<=",
-    "named": false
-  },
-  {
-    "type": ":=",
-    "named": false
-  },
-  {
-    "type": ":==",
-    "named": false
-  },
-  {
-    "type": ":>",
-    "named": false
-  },
-  {
-    "type": ":>=",
-    "named": false
-  },
-  {
-    "type": ";",
-    "named": false
-  },
-  {
-    "type": "<",
-    "named": false
-  },
-  {
-    "type": "<<",
-    "named": false
-  },
-  {
-    "type": "<=",
-    "named": false
-  },
-  {
-    "type": "=",
-    "named": false
-  },
-  {
-    "type": "==",
-    "named": false
-  },
-  {
-    "type": ">",
-    "named": false
-  },
-  {
-    "type": ">=",
-    "named": false
-  },
-  {
-    "type": ">>",
+    "type": "0x",
     "named": false
   },
   {
@@ -336,51 +155,23 @@
     "named": false
   },
   {
-    "type": "[",
+    "type": "bit",
     "named": false
   },
   {
-    "type": "\\",
+    "type": "bits",
     "named": false
-  },
-  {
-    "type": "]",
-    "named": false
-  },
-  {
-    "type": "^",
-    "named": false
-  },
-  {
-    "type": "and",
-    "named": false
-  },
-  {
-    "type": "as",
-    "named": false
-  },
-  {
-    "type": "by",
-    "named": false
-  },
-  {
-    "type": "ddot",
-    "named": true
   },
   {
     "type": "false",
     "named": false
   },
   {
-    "type": "in",
-    "named": false
+    "type": "lineterminator",
+    "named": true
   },
   {
-    "type": "is",
-    "named": false
-  },
-  {
-    "type": "or",
+    "type": "s",
     "named": false
   },
   {
@@ -388,27 +179,7 @@
     "named": false
   },
   {
-    "type": "xor",
-    "named": false
-  },
-  {
-    "type": "{",
-    "named": false
-  },
-  {
-    "type": "|",
-    "named": false
-  },
-  {
-    "type": "}",
-    "named": false
-  },
-  {
-    "type": " ",
-    "named": false
-  },
-  {
-    "type": " ",
+    "type": "u",
     "named": false
   }
 ]
