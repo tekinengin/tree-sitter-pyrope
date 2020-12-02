@@ -1,19 +1,57 @@
 module.exports = grammar({
   name: 'pyrope',
 
-  extras: $ => [],
+  extras: $ => [$._whitespace],
 
   rules: {
 
     start: $ => repeat(choice(
-      $.comment,
       $.lineterminator,
       $.lineterminatorsequence,
-      $._whitespace,
-      $.lhsvarname
+      //$._whitespace,
+      $.comment,
+      //$._lhsvarname,
+      $.overloadname,
+      $._tupledotnotation
     )),
 
-    lhsvarname: $ => choice($.identifier, $.constant),
+/**************************EXSPRESSIONS***************************/
+    
+    exspression: $ => choice(
+
+    ),
+
+
+
+    _lhsvarname: $ => choice($.identifier, $.constant),
+
+
+    /*bitselectionnotation: $ => seq(
+      $._tupledotnotation,
+      repeat(seq($.LBRK, $.LBRK, $._lhsvarname, $.RBRK, $.RBRK))
+    ),*/
+
+/************************* TUPLE NOTATION ***********************/
+
+    _tupledotnotation: $ => seq(
+      $._tuplearraynotation,
+      repeat(seq('.', $._tuplearraynotation))
+    ),
+
+    _tuplearraynotation: $ => seq(
+      $._lhsvarname, 
+      repeat(seq($.LBRK, $._lhsvarname, $.RBRK)) // decimal to expression
+    ),
+/*************************** MISC *********************************/
+
+
+
+    RBRK: $ => ']',
+    LBRK: $ => '[',
+
+/*************************** OVERLOAD *****************************/
+
+    overloadname: $ => /\.\.[^\n\r\u2028\u2029\s#;,={}()/?!|'"]+\.\./,
 
 /***************************IDENTIFIER*****************************/
     
@@ -27,7 +65,7 @@ module.exports = grammar({
     constant: $ => choice($._stringconstant, $._numericalconstant),
 
     _stringconstant: $ => choice(
-      /'(.*[^'\n\r\u2028\u2029])'/,
+      /'(.*[^"\n\r\u2028\u2029])'/,
       /"(.*[^'\n\r\u2028\u2029])"/
     ),
 
@@ -46,35 +84,43 @@ module.exports = grammar({
       'FALSE'
     ),
 
-    _decimalsigned: $ => seq(
+    /*_decimalsigned: $ => seq(
       $._decimaldigit,
-      choice('s', 'u'),
+      seq(choice('s', 'u'),
       optional(seq(
         /[0-9_]+/,
         choice('bits', 'bit')
-      )),
-    ),
+      ))),
+    ),*/
 
-    _decimaldigit: $ => choice(
+    _decimalsigned: $ => /(\?)|([-]?[0-9]{1}[0-9_]*)(s|u)?([0-9_]+(bit){1}s?)?/,
+
+    /*_decimaldigit: $ => choice(
       /\?/,
       /[-]?[0-9]{1}[0-9_]*/
-    ),
+    //),
 
-    _binary: $ => seq(
+    _decimaldigit: $ => /(\?)|([-]?[0-9]{1}[0-9_]*)/,
+
+    _binary: $ => /0b["?0-1_]+(s|u)?(["?0-9_]+(bit){1}s?)?/,
+
+    /*_binary: $ => seq(
       '0b',
       $._binarydigit,
       optional(seq(
         choice('s', 'u'),
         optional(seq( 
-          /["?0-9_]+/, // only " works
+          /["?0-9_]+/, 
           choice('bits', 'bit')
         )),
       ))
     ), 
 
-    _binarydigit: $ => /["?0-1_]+/,
+    _binarydigit: $ => /["?0-1_]+/,*/
 
-    _hexadecimal: $ => seq(
+    _hexadecimal: $ => /0x["?A-Fa-f0-9_]+(s|u)?(["?0-9_]+(bit){1}s?)?/,
+
+    /*_hexadecimal: $ => seq(
       '0x',
       $._hexdigit,
       optional(seq(
@@ -86,7 +132,7 @@ module.exports = grammar({
       ))
     ),
 
-    _hexdigit: $ => /["?A-Fa-f0-9_]+/,
+    _hexdigit: $ => /["?A-Fa-f0-9_]+/,*/
 
 
 /****************************LINE TERMINATOR*****************************/
@@ -104,16 +150,20 @@ module.exports = grammar({
       $._singlelinecomment
     ),
 
-    _multilinecomment: $ => seq(
+    //_multilinecomment: $ => /\/\*((.|\s)*?)\*\//, // is supposed to give */*/
+
+    _multilinecomment: $ => seq( //DONT GIVE  * and / is not supported in the comment body
       '/*',
-      /[\w\d\s]*/,
+      /((.|\s)[^\*\/]*)/,
       '*/'
     ),
 
-    _singlelinecomment: $ => seq(
+    /*_singlelinecomment: $ => seq(
       '//',
       /[\w\d ]*/
-    ),
+    //),*/
+
+    _singlelinecomment: $ => /\/\/((.)[^\n\r\u2028\u2029])*/,
 
   }
 });

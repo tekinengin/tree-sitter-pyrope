@@ -8,10 +8,6 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "comment"
-          },
-          {
-            "type": "SYMBOL",
             "name": "lineterminator"
           },
           {
@@ -20,16 +16,24 @@
           },
           {
             "type": "SYMBOL",
-            "name": "_whitespace"
+            "name": "comment"
           },
           {
             "type": "SYMBOL",
-            "name": "lhsvarname"
+            "name": "overloadname"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_tupledotnotation"
           }
         ]
       }
     },
-    "lhsvarname": {
+    "exspression": {
+      "type": "CHOICE",
+      "members": []
+    },
+    "_lhsvarname": {
       "type": "CHOICE",
       "members": [
         {
@@ -41,6 +45,72 @@
           "name": "constant"
         }
       ]
+    },
+    "_tupledotnotation": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_tuplearraynotation"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "."
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_tuplearraynotation"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "_tuplearraynotation": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_lhsvarname"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "LBRK"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_lhsvarname"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "RBRK"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "RBRK": {
+      "type": "STRING",
+      "value": "]"
+    },
+    "LBRK": {
+      "type": "STRING",
+      "value": "["
+    },
+    "overloadname": {
+      "type": "PATTERN",
+      "value": "\\.\\.[^\\n\\r\\u2028\\u2029\\s#;,={}()/?!|'\"]+\\.\\."
     },
     "identifier": {
       "type": "PATTERN",
@@ -64,7 +134,7 @@
       "members": [
         {
           "type": "PATTERN",
-          "value": "'(.*[^'\\n\\r\\u2028\\u2029])'"
+          "value": "'(.*[^\"\\n\\r\\u2028\\u2029])'"
         },
         {
           "type": "PATTERN",
@@ -119,215 +189,20 @@
       ]
     },
     "_decimalsigned": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_decimaldigit"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "s"
-            },
-            {
-              "type": "STRING",
-              "value": "u"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "PATTERN",
-                  "value": "[0-9_]+"
-                },
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": "bits"
-                    },
-                    {
-                      "type": "STRING",
-                      "value": "bit"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        }
-      ]
+      "type": "PATTERN",
+      "value": "(\\?)|([-]?[0-9]{1}[0-9_]*)(s|u)?([0-9_]+(bit){1}s?)?"
     },
     "_decimaldigit": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "\\?"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[-]?[0-9]{1}[0-9_]*"
-        }
-      ]
+      "type": "PATTERN",
+      "value": "(\\?)|([-]?[0-9]{1}[0-9_]*)"
     },
     "_binary": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "0b"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_binarydigit"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": "s"
-                    },
-                    {
-                      "type": "STRING",
-                      "value": "u"
-                    }
-                  ]
-                },
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SEQ",
-                      "members": [
-                        {
-                          "type": "PATTERN",
-                          "value": "[\"?0-9_]+"
-                        },
-                        {
-                          "type": "CHOICE",
-                          "members": [
-                            {
-                              "type": "STRING",
-                              "value": "bits"
-                            },
-                            {
-                              "type": "STRING",
-                              "value": "bit"
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        }
-      ]
-    },
-    "_binarydigit": {
       "type": "PATTERN",
-      "value": "[\"?0-1_]+"
+      "value": "0b[\"?0-1_]+(s|u)?([\"?0-9_]+(bit){1}s?)?"
     },
     "_hexadecimal": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "0x"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_hexdigit"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": "s"
-                    },
-                    {
-                      "type": "STRING",
-                      "value": "u"
-                    }
-                  ]
-                },
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SEQ",
-                      "members": [
-                        {
-                          "type": "PATTERN",
-                          "value": "[\"?0-9_]+"
-                        },
-                        {
-                          "type": "CHOICE",
-                          "members": [
-                            {
-                              "type": "STRING",
-                              "value": "bits"
-                            },
-                            {
-                              "type": "STRING",
-                              "value": "bit"
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        }
-      ]
-    },
-    "_hexdigit": {
       "type": "PATTERN",
-      "value": "[\"?A-Fa-f0-9_]+"
+      "value": "0x[\"?A-Fa-f0-9_]+(s|u)?([\"?0-9_]+(bit){1}s?)?"
     },
     "_whitespace": {
       "type": "PATTERN",
@@ -372,7 +247,7 @@
         },
         {
           "type": "PATTERN",
-          "value": "[\\w\\d\\s]*"
+          "value": "((.|\\s)[^\\*\\/]*)"
         },
         {
           "type": "STRING",
@@ -381,20 +256,16 @@
       ]
     },
     "_singlelinecomment": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "//"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[\\w\\d ]*"
-        }
-      ]
+      "type": "PATTERN",
+      "value": "\\/\\/((.)[^\\n\\r\\u2028\\u2029])*"
     }
   },
-  "extras": [],
+  "extras": [
+    {
+      "type": "SYMBOL",
+      "name": "_whitespace"
+    }
+  ],
   "conflicts": [],
   "externals": [],
   "inline": [],

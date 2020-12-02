@@ -10,25 +10,6 @@
     "fields": {}
   },
   {
-    "type": "lhsvarname",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "constant",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "lineterminatorsequence",
     "named": true,
     "fields": {}
@@ -42,11 +23,23 @@
       "required": false,
       "types": [
         {
+          "type": "LBRK",
+          "named": true
+        },
+        {
+          "type": "RBRK",
+          "named": true
+        },
+        {
           "type": "comment",
           "named": true
         },
         {
-          "type": "lhsvarname",
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "identifier",
           "named": true
         },
         {
@@ -55,6 +48,10 @@
         },
         {
           "type": "lineterminatorsequence",
+          "named": true
+        },
+        {
+          "type": "overloadname",
           "named": true
         }
       ]
@@ -65,19 +62,11 @@
     "named": false
   },
   {
+    "type": ".",
+    "named": false
+  },
+  {
     "type": "/*",
-    "named": false
-  },
-  {
-    "type": "//",
-    "named": false
-  },
-  {
-    "type": "0b",
-    "named": false
-  },
-  {
-    "type": "0x",
     "named": false
   },
   {
@@ -85,15 +74,15 @@
     "named": false
   },
   {
+    "type": "LBRK",
+    "named": true
+  },
+  {
+    "type": "RBRK",
+    "named": true
+  },
+  {
     "type": "TRUE",
-    "named": false
-  },
-  {
-    "type": "bit",
-    "named": false
-  },
-  {
-    "type": "bits",
     "named": false
   },
   {
@@ -109,15 +98,11 @@
     "named": true
   },
   {
-    "type": "s",
-    "named": false
+    "type": "overloadname",
+    "named": true
   },
   {
     "type": "true",
-    "named": false
-  },
-  {
-    "type": "u",
     "named": false
   }
 ]
