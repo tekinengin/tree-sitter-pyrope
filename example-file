@@ -12,7 +12,7 @@
 0b_1s
 // 12s8bits /*
 /*
-  asd 2 */ 2                12
+  asd 2 */ 2                
 true
 'hell%$@#$o'
 "asd@#'$% " //else 12
@@ -20,4 +20,6 @@ true
 %varname1
 $varname2?
 ..%..
-    [1].[2]
+   a[1].a[[1]]
+a and b
+_tmp1

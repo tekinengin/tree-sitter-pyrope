@@ -1,16 +1,29 @@
 [
   {
-    "type": "comment",
+    "type": "binaryexpression",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "binaryexpression",
+          "named": true
+        },
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "constant",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "lineterminatorsequence",
     "named": true,
     "fields": {}
   },
@@ -23,15 +36,7 @@
       "required": false,
       "types": [
         {
-          "type": "LBRK",
-          "named": true
-        },
-        {
-          "type": "RBRK",
-          "named": true
-        },
-        {
-          "type": "comment",
+          "type": "binaryexpression",
           "named": true
         },
         {
@@ -43,14 +48,6 @@
           "named": true
         },
         {
-          "type": "lineterminator",
-          "named": true
-        },
-        {
-          "type": "lineterminatorsequence",
-          "named": true
-        },
-        {
           "type": "overloadname",
           "named": true
         }
@@ -58,7 +55,35 @@
     }
   },
   {
+    "type": "!=",
+    "named": false
+  },
+  {
+    "type": "&",
+    "named": false
+  },
+  {
+    "type": "*",
+    "named": false
+  },
+  {
     "type": "*/",
+    "named": false
+  },
+  {
+    "type": "+",
+    "named": false
+  },
+  {
+    "type": "++",
+    "named": false
+  },
+  {
+    "type": "-",
+    "named": false
+  },
+  {
+    "type": "--",
     "named": false
   },
   {
@@ -66,7 +91,71 @@
     "named": false
   },
   {
+    "type": "/",
+    "named": false
+  },
+  {
     "type": "/*",
+    "named": false
+  },
+  {
+    "type": ":!=",
+    "named": false
+  },
+  {
+    "type": ":<",
+    "named": false
+  },
+  {
+    "type": ":<=",
+    "named": false
+  },
+  {
+    "type": ":==",
+    "named": false
+  },
+  {
+    "type": ":>",
+    "named": false
+  },
+  {
+    "type": ":>=",
+    "named": false
+  },
+  {
+    "type": "<",
+    "named": false
+  },
+  {
+    "type": "<<",
+    "named": false
+  },
+  {
+    "type": "<<<",
+    "named": false
+  },
+  {
+    "type": "<=",
+    "named": false
+  },
+  {
+    "type": "==",
+    "named": false
+  },
+  {
+    "type": ">",
+    "named": false
+  },
+  {
+    "type": ">=",
+    "named": false
+  },
+  {
+    "type": ">>",
+    "named": false
+  },
+  {
+    "type": ">>>",
     "named": false
   },
   {
@@ -74,15 +163,15 @@
     "named": false
   },
   {
-    "type": "LBRK",
-    "named": true
-  },
-  {
-    "type": "RBRK",
-    "named": true
-  },
-  {
     "type": "TRUE",
+    "named": false
+  },
+  {
+    "type": "^",
+    "named": false
+  },
+  {
+    "type": "and",
     "named": false
   },
   {
@@ -94,8 +183,8 @@
     "named": true
   },
   {
-    "type": "lineterminator",
-    "named": true
+    "type": "or",
+    "named": false
   },
   {
     "type": "overloadname",
@@ -103,6 +192,14 @@
   },
   {
     "type": "true",
+    "named": false
+  },
+  {
+    "type": "xor",
+    "named": false
+  },
+  {
+    "type": "|",
     "named": false
   }
 ]
