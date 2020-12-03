@@ -14,47 +14,85 @@ module.exports = grammar({
 
   word: $ => $.identifier,
 
-  //conflicts: $ => [[$.relationalexpression],[$.logicalexpression],[$.binaryexpression]],
-  conflicts: $ => [[$.binaryexpression]],
+  conflicts: $ => [[$.binaryoperator], [$._additiveoperator]],
 
   rules: {
 
-    start: $ => repeat(prec.left(seq(
-      
+    start: $ => optional($._codeblocks),
+
+    _codeblocks: $ => repeat1(seq(
+      $._statement,
+      repeat(choice($._lineterminatorsequence, $._lineterminator, $._SEMICOLON))
+      )), 
+
+/************************** SCOPE DECLARATIONS ********************************/
+    scopedeclaration: $ => seq(
       choice(
-        //$._lineterminator,
-        //$._lineterminatorsequence,
-        $.overloadname,
-        //$.bitselectionnotation,
-        $._exspression
+        optional(seq(':',optional($.scopeargument),':')),
+        optional($._exspression)),
+      $._LBRACE,
+      $._codeblocks,
+      $._RBRACE
+    ),
+
+    scopeargument: $ => seq(
+      '(',
+      optional(seq(
+        choice($.assignmentexpression, $._exspression),
+        repeat(seq(',', choice($.assignmentexpression, $._exspression))),
+        repeat(','))),
+      ')'
       ),
-      //repeat1(choice($._lineterminatorsequence, $._lineterminator, $._comment))
-      repeat1(seq(repeat($._comment), choice($._lineterminatorsequence, $._lineterminator)))
-    ))),
+
+
+/**************************CODE BLOCK INSTRUCTIONS*****************************/
+    _statement: $ => seq(
+      //repeat($._comment),
+      choice(
+        $.ifstatement,
+        $.assignmentexpression
+        ),
+      //repeat($._comment)
+    ),
+
+    ifstatement: $ => seq(
+      'if',
+      $._exspression,
+      $.scopedeclaration,
+      repeat(seq(
+        'elif',
+        $._exspression,
+        $.scopedeclaration)),
+      optional(seq(
+        'else',
+        $.scopedeclaration)),
+    ),
+
+    whilestatement: $ => seq(),
+
+    assignmentexpression: $ => seq(
+      choice(
+        //$.overloadnotation,
+        $._exspression),
+      $.assignmentoperator,
+      choice($._exspression, $.scopedeclaration) // add fcallimplicit
+    ),
 
 /**************************EXSPRESSIONS***************************/
     
-    _exspression: $ => repeat1(choice(
-      //$.logicalexpression,
-      //$.relationalexpression,
-      //$.binaryexpression,
-      $.binaryexpression,
-      $._bitselectionnotation
-    )),
+    _exspression: $ => choice(
+      $.unaryoperator,
+      $.binaryoperator,
+      $.tuplenotation,
+      $.rangenotation,
+    ),
 
-    /*logicalexpression: $ => prec(PREC.logical,seq(
-      $._exspression,
-      choice('and', 'or', 'xor'),
+    unaryoperator: $ => prec(PREC.unary,seq(
+      choice('not' ,'!', '~', '?'),
       $._exspression
     )),
 
-    relationalexpression: $ => prec(PREC.comparators,seq(
-      $._exspression,
-      choice($._EQUEQU, $._ISEQU, $._BANGEQU, $._LE, $._GE, $._LT, $._GT),
-      $._exspression
-    )),*/
-
-    binaryexpression: $ => choice(
+    binaryoperator: $ => choice(
       prec(PREC.logical,seq(
         $._exspression,
         choice('and', 'or', 'xor'),
@@ -63,6 +101,10 @@ module.exports = grammar({
         $._exspression,
         choice($._EQUEQU, $._ISEQU, $._BANGEQU, $._LE, $._GE, $._LT, $._GT),
         $._exspression)),
+      $._additiveoperator
+    ),
+
+    _additiveoperator: $ => choice(
       prec(PREC.addtv, seq(
         $._exspression, 
         choice('|', '^', '&','++', '--', '<<', '>>', '<<<', '>>>'),
@@ -77,22 +119,6 @@ module.exports = grammar({
         $._exspression)),
     ),
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /************************ OPERATORS ******************************/
 
     _LT: $ => choice ('<', ':<'),
@@ -102,33 +128,59 @@ module.exports = grammar({
 
     _EQUEQU: $ => choice('==',':=='),
     _ISEQU: $ => 'is',
-    
+
+    assignmentoperator: $ => choice(
+      $._EQU,
+      $._AS,
+      $._TPLUSEQU,
+      $._STAREQU,
+      $._PLUSEQU,
+      $._MINUSEQU,
+      $._LEFTEQU,
+      $._RIGHTEQU
+    ),
+
     _BANGEQU: $ => choice('!=', ':!='),
+    _EQU: $ => choice('=', ':='),
+    _AS: $ => 'as',
+    _IN: $ => 'in',    
 
-/************************ END OF STATEMENT ***********************/
+    _TPLUSEQU: $ => choice('++=', '++:='),
+    _STAREQU: $ => choice('*=', '*:='),
+    _DIVEQU: $ => choice('/=','/:='),
+    _MODEQU: $ => choice('%=', '%:='),
+    _PLUSEQU: $ => choice('+=', '+:='),
+    _MINUSEQU: $ => choice('-=', '-:='),
+    _LEFTEQU: $ => choice('<<=', '<<:='),
+    _RIGHTEQU: $ => choice('>>=', '>>:='),
 
-  /*EOS:  $ => choice(
-    seq(optional($.SS), repeat($.SEMICOLON)),
-    seq(optional($.S), optional($._singlelinecomment), $.lineterminatorsequence)
-  ),
+/************************* RANGE NOTATION ***********************/
 
-  SS: $ => repeat1(choice(
-    $.lineterminatorsequence,
-    $.comment
-  )),
-
-  S: $ => repeat1(choice(
-    $._multilinecomment  //????
-  )),*/
-
-
-
-
+    rangenotation: $ => prec.left(1,seq(
+      optional($._lhsvarname),
+      '..',
+      optional(choice($._additiveoperator, $._bitselectionnotation)),
+      optional($._tupleby)
+    )),
     
 /************************* TUPLE NOTATION ***********************/
 
+    tuplenotation: $ => prec.left(choice(
+      seq(
+        '(',
+        choice($._exspression, $.assignmentexpression),
+        repeat(seq(/,+/, choice($._exspression, $.assignmentexpression))),
+        /,*/,
+        ')',
+        optional(choice($._bitselectionbracket, $._tupleby))
+        ),
+      $._bitselectionnotation
+    )),
+
+    _tupleby: $ => seq('by', $._lhsvarname),
+
     _bitselectionnotation: $ => seq($._tupledotnotation, optional($._bitselectionbracket)),
-    _bitselectionbracket: $ => repeat1(seq($._LLBRK, optional($._lhsvarname), $._RRBRK)),
+    _bitselectionbracket: $ => repeat1(seq($._LLBRK, optional($._exspression), $._RRBRK)),
 
     _tupledotnotation: $ => seq(
       $._tuplearraynotation,
@@ -140,22 +192,41 @@ module.exports = grammar({
       repeat(seq($._LBRK, $._lhsvarname, $._RBRK)) // decimal to expression
     ),
 
-    _lhsvarname: $ => choice($.identifier, $.constant),
+
+    _lhsvarname: $ => prec.right(choice( 
+      seq(
+        optional(choice($._input, $._output, $._register)),
+        choice($.identifier, $.constant)),
+      choice($._input, $._output, $._register)
+      )),
+
+    _input: $ => '$',
+    _output: $ => '%',
+    _register: $ => '#',
 
 /*************************** MISC *********************************/
     _LLBRK: $ => '[[',
     _RRBRK: $ => ']]',
     _LBRK: $ => '[',
     _RBRK: $ => ']',
+    _LBRACE: $ => '{',
+    _RBRACE: $ => '}',
     _SEMICOLON: $ => ';',
 
 /*************************** OVERLOAD *****************************/
 
-    overloadname: $ => /\.\.[^\n\r\u2028\u2029\s#;,={}()/?!|'"]+\.\./, // [] will be added
+    overloadnotation: $ => prec.right(2,seq(
+      '..',
+      $.overloadname,
+      '..'
+      )),
+
+    //overloadname: $ => prec(2,/\.\.[^\n\r\u2028\u2029\s#;,={}()/?!|'"]+\.\./), // [] will be added
+    overloadname: $ => /[^\n\r\u2028\u2029\s#;,={}()/?!|'"]+/, // [] will be added
 
 /***************************IDENTIFIER*****************************/
     
-    identifier: $ => /[!_]?[a-zA-Z%$#]{1}[a-zA-Z0-9]*[?]?/,
+    identifier: $ => /[_]*[a-zA-Z]{1}[a-zA-Z0-9]*[?]?/,
     //idprefix: $ => /[!-]{1}/,
     //idnondigit: $ => /[a-zA-Z%$#]{1}/,
     //idchar: $ => /[a-zA-Z0-9]{1}/,
@@ -165,8 +236,8 @@ module.exports = grammar({
     constant: $ => choice($._stringconstant, $._numericalconstant),
 
     _stringconstant: $ => choice(
-      /'(.*[^"\n\r\u2028\u2029])'/,
-      /"(.*[^'\n\r\u2028\u2029])"/
+      /'(.*[^"\n\r\u2028\u2029])'/, //check this
+      /"(.*[^'\n\r\u2028\u2029])"/ //check this
     ),
 
     _numericalconstant: $ => choice(
@@ -184,60 +255,17 @@ module.exports = grammar({
       'FALSE'
     ),
 
-    /*_decimalsigned: $ => seq(
-      $._decimaldigit,
-      seq(choice('s', 'u'),
-      optional(seq(
-        /[0-9_]+/,
-        choice('bits', 'bit')
-      ))),
-    ),*/
+    _decimalsigned: $ => /([-]?[0-9]{1}[0-9_]*)(s|u)?([0-9_]+(bit){1}s?)?/,
 
-    _decimalsigned: $ => /(\?)|([-]?[0-9]{1}[0-9_]*)(s|u)?([0-9_]+(bit){1}s?)?/,
+    _decimaldigit: $ => /([-]?[0-9]{1}[0-9_]*)/,
 
-    /*_decimaldigit: $ => choice(
-      /\?/,
-      /[-]?[0-9]{1}[0-9_]*/
-    //),
+    _binary: $ => /0b["0-1_]+(s|u)?(["?0-9_]+(bit){1}s?)?/,
 
-    _decimaldigit: $ => /(\?)|([-]?[0-9]{1}[0-9_]*)/,
-
-    _binary: $ => /0b["?0-1_]+(s|u)?(["?0-9_]+(bit){1}s?)?/,
-
-    /*_binary: $ => seq(
-      '0b',
-      $._binarydigit,
-      optional(seq(
-        choice('s', 'u'),
-        optional(seq( 
-          /["?0-9_]+/, 
-          choice('bits', 'bit')
-        )),
-      ))
-    ), 
-
-    _binarydigit: $ => /["?0-1_]+/,*/
-
-    _hexadecimal: $ => /0x["?A-Fa-f0-9_]+(s|u)?(["?0-9_]+(bit){1}s?)?/,
-
-    /*_hexadecimal: $ => seq(
-      '0x',
-      $._hexdigit,
-      optional(seq(
-        choice('s', 'u'),
-        optional(seq(
-          /["?0-9_]+/, // only " works
-          choice('bits', 'bit')
-        )),
-      ))
-    ),
-
-    _hexdigit: $ => /["?A-Fa-f0-9_]+/,*/
-
+    _hexadecimal: $ => /0x["A-Fa-f0-9_]+(s|u)?(["?0-9_]+(bit){1}s?)?/,
 
 /****************************LINE TERMINATOR*****************************/
     
-    _whitespace: $ => /[ \t\u000B\u000C\uFEFF]+/, // /n ?????
+    _whitespace: $ => /[ \n\t\u000B\u000C\uFEFF]+/, // /n ?????
     _lineterminator: $ => /[\n\r\u2028\u2029]+/,
     _lineterminatorsequence: $ => choice(
       /[\n\u2028\u2029]+/,
@@ -254,14 +282,9 @@ module.exports = grammar({
 
     _multilinecomment: $ => seq( //DONT GIVE  * and / is not supported in the comment body
       '/*',
-      /((.|\s)[^\*\/]*)/,
+      /[^\*\/]*/,
       '*/'
     ),
-
-    /*_singlelinecomment: $ => seq(
-      '//',
-      /[\w\d ]*/
-    //),*/
 
     _singlelinecomment: $ => /\/\/([^\n\r\u2028\u2029])*/,
 
