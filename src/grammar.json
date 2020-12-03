@@ -196,7 +196,19 @@
             },
             {
               "type": "SYMBOL",
+              "name": "whilestatement"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "forstatement"
+            },
+            {
+              "type": "SYMBOL",
               "name": "assignmentexpression"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "assertionstatement"
             }
           ]
         }
@@ -262,7 +274,91 @@
     },
     "whilestatement": {
       "type": "SEQ",
-      "members": []
+      "members": [
+        {
+          "type": "STRING",
+          "value": "while"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_exspression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "scopedeclaration"
+        }
+      ]
+    },
+    "forstatement": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "for"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "identifier"
+          },
+          {
+            "type": "STRING",
+            "value": "in"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "tuplenotation"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "rangenotation"
+              }
+            ]
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_SEMICOLON"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                },
+                {
+                  "type": "STRING",
+                  "value": "in"
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "tuplenotation"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "rangenotation"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "SYMBOL",
+            "name": "scopedeclaration"
+          }
+        ]
+      }
     },
     "assignmentexpression": {
       "type": "SEQ",
@@ -292,6 +388,23 @@
               "name": "scopedeclaration"
             }
           ]
+        }
+      ]
+    },
+    "assertionstatement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "I("
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_exspression"
+        },
+        {
+          "type": "STRING",
+          "value": ")"
         }
       ]
     },
@@ -1285,7 +1398,7 @@
     },
     "_decimalsigned": {
       "type": "PATTERN",
-      "value": "([-]?[0-9]{1}[0-9_]*)(s|u)?([0-9_]+(bit){1}s?)?"
+      "value": "([-]?[0-9]{1}[0-9_]*)(s|u)?[0-9_]+((bit){1}s?)?"
     },
     "_decimaldigit": {
       "type": "PATTERN",
@@ -1293,11 +1406,11 @@
     },
     "_binary": {
       "type": "PATTERN",
-      "value": "0b[\"0-1_]+(s|u)?([\"?0-9_]+(bit){1}s?)?"
+      "value": "0b[\"0-1_]+(s|u)?[\"?0-9_]+((bit){1}s?)?"
     },
     "_hexadecimal": {
       "type": "PATTERN",
-      "value": "0x[\"A-Fa-f0-9_]+(s|u)?([\"?0-9_]+(bit){1}s?)?"
+      "value": "0x[\"A-Fa-f0-9_]+(s|u)?[\"?0-9_]+((bit){1}s?)?"
     },
     "_whitespace": {
       "type": "PATTERN",

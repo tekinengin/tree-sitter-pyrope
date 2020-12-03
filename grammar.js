@@ -50,7 +50,10 @@ module.exports = grammar({
       //repeat($._comment),
       choice(
         $.ifstatement,
-        $.assignmentexpression
+        $.whilestatement,
+        $.forstatement,
+        $.assignmentexpression,
+        $.assertionstatement
         ),
       //repeat($._comment)
     ),
@@ -68,7 +71,24 @@ module.exports = grammar({
         $.scopedeclaration)),
     ),
 
-    whilestatement: $ => seq(),
+    whilestatement: $ => seq(
+      'while',
+      $._exspression,
+      $.scopedeclaration
+    ),
+
+    forstatement: $ => prec.left(seq(
+      'for',
+      $.identifier,
+      'in', 
+      choice($.tuplenotation, $.rangenotation),
+      repeat(seq(
+        $._SEMICOLON,  
+        $.identifier,
+        'in', 
+        choice($.tuplenotation, $.rangenotation))),
+      $.scopedeclaration
+    )),
 
     assignmentexpression: $ => seq(
       choice(
@@ -77,6 +97,8 @@ module.exports = grammar({
       $.assignmentoperator,
       choice($._exspression, $.scopedeclaration) // add fcallimplicit
     ),
+
+    assertionstatement: $ => seq('I(',$._exspression,')'),
 
 /**************************EXSPRESSIONS***************************/
     
@@ -255,13 +277,15 @@ module.exports = grammar({
       'FALSE'
     ),
 
-    _decimalsigned: $ => /([-]?[0-9]{1}[0-9_]*)(s|u)?([0-9_]+(bit){1}s?)?/,
+    //_decimalsigned: $ => /([-]?[0-9]{1}[0-9_]*)(s|u)?([0-9_]+(bit){1}s?)?/,
+    _decimalsigned: $ => /([-]?[0-9]{1}[0-9_]*)(s|u)?[0-9_]+((bit){1}s?)?/,
+
 
     _decimaldigit: $ => /([-]?[0-9]{1}[0-9_]*)/,
 
-    _binary: $ => /0b["0-1_]+(s|u)?(["?0-9_]+(bit){1}s?)?/,
+    _binary: $ => /0b["0-1_]+(s|u)?["?0-9_]+((bit){1}s?)?/,
 
-    _hexadecimal: $ => /0x["A-Fa-f0-9_]+(s|u)?(["?0-9_]+(bit){1}s?)?/,
+    _hexadecimal: $ => /0x["A-Fa-f0-9_]+(s|u)?["?0-9_]+((bit){1}s?)?/,
 
 /****************************LINE TERMINATOR*****************************/
     
