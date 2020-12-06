@@ -16,6 +16,10 @@
           "named": true
         },
         {
+          "type": "tupleconcat",
+          "named": true
+        },
+        {
           "type": "tuplenotation",
           "named": true
         },
@@ -51,6 +55,10 @@
           "named": true
         },
         {
+          "type": "tupleconcat",
+          "named": true
+        },
+        {
           "type": "tuplenotation",
           "named": true
         },
@@ -80,6 +88,10 @@
         },
         {
           "type": "rangenotation",
+          "named": true
+        },
+        {
+          "type": "tupleconcat",
           "named": true
         },
         {
@@ -146,6 +158,14 @@
           "named": true
         },
         {
+          "type": "scopeelse",
+          "named": true
+        },
+        {
+          "type": "tupleconcat",
+          "named": true
+        },
+        {
           "type": "tuplenotation",
           "named": true
         },
@@ -181,6 +201,10 @@
           "named": true
         },
         {
+          "type": "tupleconcat",
+          "named": true
+        },
+        {
           "type": "tuplenotation",
           "named": true
         },
@@ -209,6 +233,10 @@
         },
         {
           "type": "rangenotation",
+          "named": true
+        },
+        {
+          "type": "tupleconcat",
           "named": true
         },
         {
@@ -259,11 +287,46 @@
           "named": true
         },
         {
+          "type": "tupleconcat",
+          "named": true
+        },
+        {
           "type": "tuplenotation",
           "named": true
         },
         {
           "type": "unaryoperator",
+          "named": true
+        },
+        {
+          "type": "whilestatement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "scopeelse",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "assertionstatement",
+          "named": true
+        },
+        {
+          "type": "assignmentexpression",
+          "named": true
+        },
+        {
+          "type": "forstatement",
+          "named": true
+        },
+        {
+          "type": "ifstatement",
           "named": true
         },
         {
@@ -305,6 +368,37 @@
     }
   },
   {
+    "type": "tupleconcat",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "binaryoperator",
+          "named": true
+        },
+        {
+          "type": "rangenotation",
+          "named": true
+        },
+        {
+          "type": "tupleconcat",
+          "named": true
+        },
+        {
+          "type": "tuplenotation",
+          "named": true
+        },
+        {
+          "type": "unaryoperator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "tuplenotation",
     "named": true,
     "fields": {},
@@ -333,6 +427,10 @@
           "named": true
         },
         {
+          "type": "tupleconcat",
+          "named": true
+        },
+        {
           "type": "tuplenotation",
           "named": true
         },
@@ -357,6 +455,10 @@
         },
         {
           "type": "rangenotation",
+          "named": true
+        },
+        {
+          "type": "tupleconcat",
           "named": true
         },
         {
@@ -388,6 +490,10 @@
         },
         {
           "type": "scopedeclaration",
+          "named": true
+        },
+        {
+          "type": "tupleconcat",
           "named": true
         },
         {

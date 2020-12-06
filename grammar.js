@@ -14,7 +14,12 @@ module.exports = grammar({
 
   word: $ => $.identifier,
 
-  conflicts: $ => [[$.binaryoperator], [$._additiveoperator]],
+  conflicts: $ => [
+    [$.binaryoperator],
+    [$._additiveoperator],
+    [$.tupleconcat],
+    [$.tupleconcat, $._additiveoperator],
+  ],
 
   rules: {
 
@@ -24,26 +29,6 @@ module.exports = grammar({
       $._statement,
       repeat(choice($._lineterminatorsequence, $._lineterminator, $._SEMICOLON))
       )), 
-
-/************************** SCOPE DECLARATIONS ********************************/
-    scopedeclaration: $ => seq(
-      choice(
-        optional(seq(':',optional($.scopeargument),':')),
-        optional($._exspression)),
-      $._LBRACE,
-      $._codeblocks,
-      $._RBRACE
-    ),
-
-    scopeargument: $ => seq(
-      '(',
-      optional(seq(
-        choice($.assignmentexpression, $._exspression),
-        repeat(seq(',', choice($.assignmentexpression, $._exspression))),
-        repeat(','))),
-      ')'
-      ),
-
 
 /**************************CODE BLOCK INSTRUCTIONS*****************************/
     _statement: $ => seq(
@@ -66,9 +51,8 @@ module.exports = grammar({
         'elif',
         $._exspression,
         $.scopedeclaration)),
-      optional(seq(
-        'else',
-        $.scopedeclaration)),
+      optional(
+        $.scopeelse),
     ),
 
     whilestatement: $ => seq(
@@ -100,19 +84,58 @@ module.exports = grammar({
 
     assertionstatement: $ => seq('I(',$._exspression,')'),
 
+
+/************************** SCOPE DECLARATIONS ********************************/
+    scopedeclaration: $ => seq(
+      choice(
+        optional(seq(':',optional($.scopeargument),':')),
+        optional($._exspression)),
+      $._LBRACE,
+      choice($._codeblocks, $._exspression),
+      $._RBRACE,
+      optional($.scopeelse)
+    ),
+
+    scopeelse: $ => seq(
+      'else',
+      $._LBRACE,
+      $._codeblocks,
+      $._RBRACE
+      ),
+
+    scopeargument: $ => seq(
+      '(',
+      optional(seq(
+        choice($.assignmentexpression, $._exspression),
+        repeat(seq(',', choice($.assignmentexpression, $._exspression))),
+        repeat(','))),
+      ')'
+      ),
+
+    scopedec_compound_statement: $ =>  seq(
+      $._LBRACE,
+      $._codeblocks,
+      $._RBRACE,
+    ),
+
 /**************************EXSPRESSIONS***************************/
     
     _exspression: $ => choice(
       $.unaryoperator,
       $.binaryoperator,
+      $.tupleconcat,
       $.tuplenotation,
       $.rangenotation,
     ),
 
-    unaryoperator: $ => prec(PREC.unary,seq(
-      choice('not' ,'!', '~', '?'),
-      $._exspression
-    )),
+    unaryoperator: $ => prec.left(PREC.unary,choice(
+      seq(
+        choice('not' ,'!', '~'),
+        $._exspression),
+      seq(
+        $._exspression,
+        token.immediate('?'))
+      )),
 
     binaryoperator: $ => choice(
       prec(PREC.logical,seq(
@@ -123,13 +146,13 @@ module.exports = grammar({
         $._exspression,
         choice($._EQUEQU, $._ISEQU, $._BANGEQU, $._LE, $._GE, $._LT, $._GT),
         $._exspression)),
-      $._additiveoperator
+      $._additiveoperator,
     ),
 
     _additiveoperator: $ => choice(
       prec(PREC.addtv, seq(
         $._exspression, 
-        choice('|', '^', '&','++', '--', '<<', '>>', '<<<', '>>>'),
+        choice('|', '^', '&', '<<', '>>', '<<<', '>>>'),
         $._exspression)),
       prec.left(PREC.addplusmns, seq(
         $._exspression, 
@@ -140,6 +163,12 @@ module.exports = grammar({
         choice('*', '/'),
         $._exspression)),
     ),
+
+    tupleconcat: $ => prec(PREC.addtv, seq(
+      $._exspression, 
+      choice('++', '--'),
+      $._exspression
+    )),
 
 /************************ OPERATORS ******************************/
 
@@ -248,7 +277,7 @@ module.exports = grammar({
 
 /***************************IDENTIFIER*****************************/
     
-    identifier: $ => /[_]*[a-zA-Z]{1}[a-zA-Z0-9]*[?]?/,
+    identifier: $ => /[_]*[a-zA-Z]{1}[a-zA-Z0-9]*/,
     //idprefix: $ => /[!-]{1}/,
     //idnondigit: $ => /[a-zA-Z%$#]{1}/,
     //idchar: $ => /[a-zA-Z0-9]{1}/,
@@ -283,9 +312,9 @@ module.exports = grammar({
 
     _decimaldigit: $ => /([-]?[0-9]{1}[0-9_]*)/,
 
-    _binary: $ => /0b["0-1_]+(s|u)?["?0-9_]+((bit){1}s?)?/,
+    _binary: $ => /0b["0-1_]+(s|u)?[?0-9_]+((bit){1}s?)?/,
 
-    _hexadecimal: $ => /0x["A-Fa-f0-9_]+(s|u)?["?0-9_]+((bit){1}s?)?/,
+    _hexadecimal: $ => /0x["A-Fa-f0-9_]+(s|u)?[0-9_]+((bit){1}s?)?/,
 
 /****************************LINE TERMINATOR*****************************/
     
