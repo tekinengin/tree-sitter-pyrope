@@ -1,4 +1,4 @@
-# tree-sitter-pyrope
+# tree-sitter-pyrope (under development)
 A tree-sitter grammer and parser for pyrope
 
 
