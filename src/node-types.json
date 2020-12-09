@@ -4,11 +4,47 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
-      "required": true,
+      "multiple": true,
+      "required": false,
       "types": [
         {
+          "type": "assignmentexpression",
+          "named": true
+        },
+        {
           "type": "binaryoperator",
+          "named": true
+        },
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "funcpipe",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "importstatement",
+          "named": true
+        },
+        {
+          "type": "input",
+          "named": true
+        },
+        {
+          "type": "output",
+          "named": true
+        },
+        {
+          "type": "punchstatement",
           "named": true
         },
         {
@@ -16,11 +52,11 @@
           "named": true
         },
         {
-          "type": "tupleconcat",
+          "type": "register",
           "named": true
         },
         {
-          "type": "tuplenotation",
+          "type": "tupleconcat",
           "named": true
         },
         {
@@ -39,6 +75,10 @@
       "required": true,
       "types": [
         {
+          "type": "assignmentexpression",
+          "named": true
+        },
+        {
           "type": "assignmentoperator",
           "named": true
         },
@@ -47,7 +87,47 @@
           "named": true
         },
         {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "funcpipe",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "importstatement",
+          "named": true
+        },
+        {
+          "type": "input",
+          "named": true
+        },
+        {
+          "type": "output",
+          "named": true
+        },
+        {
+          "type": "overloadnotation",
+          "named": true
+        },
+        {
+          "type": "punchstatement",
+          "named": true
+        },
+        {
           "type": "rangenotation",
+          "named": true
+        },
+        {
+          "type": "register",
           "named": true
         },
         {
@@ -56,10 +136,6 @@
         },
         {
           "type": "tupleconcat",
-          "named": true
-        },
-        {
-          "type": "tuplenotation",
           "named": true
         },
         {
@@ -80,10 +156,46 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
+          "type": "assignmentexpression",
+          "named": true
+        },
+        {
           "type": "binaryoperator",
+          "named": true
+        },
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "funcpipe",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "importstatement",
+          "named": true
+        },
+        {
+          "type": "input",
+          "named": true
+        },
+        {
+          "type": "output",
+          "named": true
+        },
+        {
+          "type": "punchstatement",
           "named": true
         },
         {
@@ -91,11 +203,11 @@
           "named": true
         },
         {
-          "type": "tupleconcat",
+          "type": "register",
           "named": true
         },
         {
-          "type": "tuplenotation",
+          "type": "tupleconcat",
           "named": true
         },
         {
@@ -111,6 +223,152 @@
     "fields": {}
   },
   {
+    "type": "fcallexplicit",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "assignmentexpression",
+          "named": true
+        },
+        {
+          "type": "binaryoperator",
+          "named": true
+        },
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "funcpipe",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "importstatement",
+          "named": true
+        },
+        {
+          "type": "input",
+          "named": true
+        },
+        {
+          "type": "output",
+          "named": true
+        },
+        {
+          "type": "punchstatement",
+          "named": true
+        },
+        {
+          "type": "rangenotation",
+          "named": true
+        },
+        {
+          "type": "register",
+          "named": true
+        },
+        {
+          "type": "scopeargument",
+          "named": true
+        },
+        {
+          "type": "scopedeclaration",
+          "named": true
+        },
+        {
+          "type": "tupleconcat",
+          "named": true
+        },
+        {
+          "type": "unaryoperator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "fcallimplicit",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "assignmentexpression",
+          "named": true
+        },
+        {
+          "type": "binaryoperator",
+          "named": true
+        },
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "funcpipe",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "importstatement",
+          "named": true
+        },
+        {
+          "type": "input",
+          "named": true
+        },
+        {
+          "type": "output",
+          "named": true
+        },
+        {
+          "type": "punchstatement",
+          "named": true
+        },
+        {
+          "type": "rangenotation",
+          "named": true
+        },
+        {
+          "type": "register",
+          "named": true
+        },
+        {
+          "type": "scopedeclaration",
+          "named": true
+        },
+        {
+          "type": "tupleconcat",
+          "named": true
+        },
+        {
+          "type": "unaryoperator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "forstatement",
     "named": true,
     "fields": {},
@@ -119,7 +377,43 @@
       "required": true,
       "types": [
         {
+          "type": "assignmentexpression",
+          "named": true
+        },
+        {
+          "type": "binaryoperator",
+          "named": true
+        },
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "funcpipe",
+          "named": true
+        },
+        {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "importstatement",
+          "named": true
+        },
+        {
+          "type": "input",
+          "named": true
+        },
+        {
+          "type": "output",
+          "named": true
+        },
+        {
+          "type": "punchstatement",
           "named": true
         },
         {
@@ -127,11 +421,109 @@
           "named": true
         },
         {
-          "type": "scopedeclaration",
+          "type": "register",
           "named": true
         },
         {
-          "type": "tuplenotation",
+          "type": "scopedec_compound_statement",
+          "named": true
+        },
+        {
+          "type": "tupleconcat",
+          "named": true
+        },
+        {
+          "type": "unaryoperator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "fpipestatement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "assignmentexpression",
+          "named": true
+        },
+        {
+          "type": "binaryoperator",
+          "named": true
+        },
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "fcallimplicit",
+          "named": true
+        },
+        {
+          "type": "funcpipe",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "importstatement",
+          "named": true
+        },
+        {
+          "type": "input",
+          "named": true
+        },
+        {
+          "type": "output",
+          "named": true
+        },
+        {
+          "type": "punchstatement",
+          "named": true
+        },
+        {
+          "type": "rangenotation",
+          "named": true
+        },
+        {
+          "type": "register",
+          "named": true
+        },
+        {
+          "type": "tupleconcat",
+          "named": true
+        },
+        {
+          "type": "unaryoperator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "funcpipe",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "fcallimplicit",
           "named": true
         }
       ]
@@ -146,7 +538,43 @@
       "required": true,
       "types": [
         {
+          "type": "assignmentexpression",
+          "named": true
+        },
+        {
           "type": "binaryoperator",
+          "named": true
+        },
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "funcpipe",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "importstatement",
+          "named": true
+        },
+        {
+          "type": "input",
+          "named": true
+        },
+        {
+          "type": "output",
+          "named": true
+        },
+        {
+          "type": "punchstatement",
           "named": true
         },
         {
@@ -154,7 +582,11 @@
           "named": true
         },
         {
-          "type": "scopedeclaration",
+          "type": "register",
+          "named": true
+        },
+        {
+          "type": "scopedec_compound_statement",
           "named": true
         },
         {
@@ -166,15 +598,74 @@
           "named": true
         },
         {
-          "type": "tuplenotation",
-          "named": true
-        },
-        {
           "type": "unaryoperator",
           "named": true
         }
       ]
     }
+  },
+  {
+    "type": "importstatement",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "input",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "output",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "overloadnotation",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "overloadname",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "punchstatement",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "rangenotation",
@@ -185,6 +676,10 @@
       "required": false,
       "types": [
         {
+          "type": "assignmentexpression",
+          "named": true
+        },
+        {
           "type": "binaryoperator",
           "named": true
         },
@@ -193,7 +688,31 @@
           "named": true
         },
         {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "funcpipe",
+          "named": true
+        },
+        {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "importstatement",
+          "named": true
+        },
+        {
+          "type": "input",
+          "named": true
+        },
+        {
+          "type": "output",
+          "named": true
+        },
+        {
+          "type": "punchstatement",
           "named": true
         },
         {
@@ -201,11 +720,101 @@
           "named": true
         },
         {
+          "type": "register",
+          "named": true
+        },
+        {
+          "type": "tupleby",
+          "named": true
+        },
+        {
           "type": "tupleconcat",
           "named": true
         },
         {
-          "type": "tuplenotation",
+          "type": "unaryoperator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "register",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "returnstatement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "assignmentexpression",
+          "named": true
+        },
+        {
+          "type": "binaryoperator",
+          "named": true
+        },
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "funcpipe",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "importstatement",
+          "named": true
+        },
+        {
+          "type": "input",
+          "named": true
+        },
+        {
+          "type": "output",
+          "named": true
+        },
+        {
+          "type": "punchstatement",
+          "named": true
+        },
+        {
+          "type": "rangenotation",
+          "named": true
+        },
+        {
+          "type": "register",
+          "named": true
+        },
+        {
+          "type": "tupleconcat",
           "named": true
         },
         {
@@ -232,7 +841,43 @@
           "named": true
         },
         {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "funcpipe",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "importstatement",
+          "named": true
+        },
+        {
+          "type": "input",
+          "named": true
+        },
+        {
+          "type": "output",
+          "named": true
+        },
+        {
+          "type": "punchstatement",
+          "named": true
+        },
+        {
           "type": "rangenotation",
+          "named": true
+        },
+        {
+          "type": "register",
           "named": true
         },
         {
@@ -240,11 +885,78 @@
           "named": true
         },
         {
-          "type": "tuplenotation",
+          "type": "unaryoperator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "scopedec_compound_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "assertionstatement",
           "named": true
         },
         {
-          "type": "unaryoperator",
+          "type": "assignmentexpression",
+          "named": true
+        },
+        {
+          "type": "breakstatement",
+          "named": true
+        },
+        {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "fcallimplicit",
+          "named": true
+        },
+        {
+          "type": "forstatement",
+          "named": true
+        },
+        {
+          "type": "fpipestatement",
+          "named": true
+        },
+        {
+          "type": "ifstatement",
+          "named": true
+        },
+        {
+          "type": "importstatement",
+          "named": true
+        },
+        {
+          "type": "punchstatement",
+          "named": true
+        },
+        {
+          "type": "returnstatement",
+          "named": true
+        },
+        {
+          "type": "trystatement",
+          "named": true
+        },
+        {
+          "type": "waitforstatement",
+          "named": true
+        },
+        {
+          "type": "whilestatement",
+          "named": true
+        },
+        {
+          "type": "yieldstatement",
           "named": true
         }
       ]
@@ -271,7 +983,35 @@
           "named": true
         },
         {
+          "type": "breakstatement",
+          "named": true
+        },
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "fcallimplicit",
+          "named": true
+        },
+        {
           "type": "forstatement",
+          "named": true
+        },
+        {
+          "type": "fpipestatement",
+          "named": true
+        },
+        {
+          "type": "funcpipe",
+          "named": true
+        },
+        {
+          "type": "identifier",
           "named": true
         },
         {
@@ -279,7 +1019,31 @@
           "named": true
         },
         {
+          "type": "importstatement",
+          "named": true
+        },
+        {
+          "type": "input",
+          "named": true
+        },
+        {
+          "type": "output",
+          "named": true
+        },
+        {
+          "type": "punchstatement",
+          "named": true
+        },
+        {
           "type": "rangenotation",
+          "named": true
+        },
+        {
+          "type": "register",
+          "named": true
+        },
+        {
+          "type": "returnstatement",
           "named": true
         },
         {
@@ -287,11 +1051,15 @@
           "named": true
         },
         {
-          "type": "tupleconcat",
+          "type": "scopeelse",
           "named": true
         },
         {
-          "type": "tuplenotation",
+          "type": "trystatement",
+          "named": true
+        },
+        {
+          "type": "tupleconcat",
           "named": true
         },
         {
@@ -299,7 +1067,15 @@
           "named": true
         },
         {
+          "type": "waitforstatement",
+          "named": true
+        },
+        {
           "type": "whilestatement",
+          "named": true
+        },
+        {
+          "type": "yieldstatement",
           "named": true
         }
       ]
@@ -322,7 +1098,39 @@
           "named": true
         },
         {
+          "type": "binaryoperator",
+          "named": true
+        },
+        {
+          "type": "breakstatement",
+          "named": true
+        },
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "fcallimplicit",
+          "named": true
+        },
+        {
           "type": "forstatement",
+          "named": true
+        },
+        {
+          "type": "fpipestatement",
+          "named": true
+        },
+        {
+          "type": "funcpipe",
+          "named": true
+        },
+        {
+          "type": "identifier",
           "named": true
         },
         {
@@ -330,7 +1138,55 @@
           "named": true
         },
         {
+          "type": "importstatement",
+          "named": true
+        },
+        {
+          "type": "input",
+          "named": true
+        },
+        {
+          "type": "output",
+          "named": true
+        },
+        {
+          "type": "punchstatement",
+          "named": true
+        },
+        {
+          "type": "rangenotation",
+          "named": true
+        },
+        {
+          "type": "register",
+          "named": true
+        },
+        {
+          "type": "returnstatement",
+          "named": true
+        },
+        {
+          "type": "trystatement",
+          "named": true
+        },
+        {
+          "type": "tupleconcat",
+          "named": true
+        },
+        {
+          "type": "unaryoperator",
+          "named": true
+        },
+        {
+          "type": "waitforstatement",
+          "named": true
+        },
+        {
           "type": "whilestatement",
+          "named": true
+        },
+        {
+          "type": "yieldstatement",
           "named": true
         }
       ]
@@ -353,7 +1209,23 @@
           "named": true
         },
         {
+          "type": "breakstatement",
+          "named": true
+        },
+        {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "fcallimplicit",
+          "named": true
+        },
+        {
           "type": "forstatement",
+          "named": true
+        },
+        {
+          "type": "fpipestatement",
           "named": true
         },
         {
@@ -361,7 +1233,77 @@
           "named": true
         },
         {
+          "type": "importstatement",
+          "named": true
+        },
+        {
+          "type": "punchstatement",
+          "named": true
+        },
+        {
+          "type": "returnstatement",
+          "named": true
+        },
+        {
+          "type": "trystatement",
+          "named": true
+        },
+        {
+          "type": "waitforstatement",
+          "named": true
+        },
+        {
           "type": "whilestatement",
+          "named": true
+        },
+        {
+          "type": "yieldstatement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "trystatement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "scopedec_compound_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "tupleby",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "input",
+          "named": true
+        },
+        {
+          "type": "output",
+          "named": true
+        },
+        {
+          "type": "register",
           "named": true
         }
       ]
@@ -369,37 +1311,6 @@
   },
   {
     "type": "tupleconcat",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "binaryoperator",
-          "named": true
-        },
-        {
-          "type": "rangenotation",
-          "named": true
-        },
-        {
-          "type": "tupleconcat",
-          "named": true
-        },
-        {
-          "type": "tuplenotation",
-          "named": true
-        },
-        {
-          "type": "unaryoperator",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "tuplenotation",
     "named": true,
     "fields": {},
     "children": {
@@ -419,7 +1330,31 @@
           "named": true
         },
         {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "funcpipe",
+          "named": true
+        },
+        {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "importstatement",
+          "named": true
+        },
+        {
+          "type": "input",
+          "named": true
+        },
+        {
+          "type": "output",
+          "named": true
+        },
+        {
+          "type": "punchstatement",
           "named": true
         },
         {
@@ -427,11 +1362,11 @@
           "named": true
         },
         {
-          "type": "tupleconcat",
+          "type": "register",
           "named": true
         },
         {
-          "type": "tuplenotation",
+          "type": "tupleconcat",
           "named": true
         },
         {
@@ -446,11 +1381,47 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
-      "required": true,
+      "multiple": true,
+      "required": false,
       "types": [
         {
+          "type": "assignmentexpression",
+          "named": true
+        },
+        {
           "type": "binaryoperator",
+          "named": true
+        },
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "funcpipe",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "importstatement",
+          "named": true
+        },
+        {
+          "type": "input",
+          "named": true
+        },
+        {
+          "type": "output",
+          "named": true
+        },
+        {
+          "type": "punchstatement",
           "named": true
         },
         {
@@ -458,15 +1429,30 @@
           "named": true
         },
         {
+          "type": "register",
+          "named": true
+        },
+        {
           "type": "tupleconcat",
           "named": true
         },
         {
-          "type": "tuplenotation",
-          "named": true
-        },
-        {
           "type": "unaryoperator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "waitforstatement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "scopeargument",
           "named": true
         }
       ]
@@ -481,7 +1467,43 @@
       "required": true,
       "types": [
         {
+          "type": "assignmentexpression",
+          "named": true
+        },
+        {
           "type": "binaryoperator",
+          "named": true
+        },
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "fcallexplicit",
+          "named": true
+        },
+        {
+          "type": "funcpipe",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "importstatement",
+          "named": true
+        },
+        {
+          "type": "input",
+          "named": true
+        },
+        {
+          "type": "output",
+          "named": true
+        },
+        {
+          "type": "punchstatement",
           "named": true
         },
         {
@@ -489,7 +1511,11 @@
           "named": true
         },
         {
-          "type": "scopedeclaration",
+          "type": "register",
+          "named": true
+        },
+        {
+          "type": "scopedec_compound_statement",
           "named": true
         },
         {
@@ -497,11 +1523,22 @@
           "named": true
         },
         {
-          "type": "tuplenotation",
-          "named": true
-        },
-        {
           "type": "unaryoperator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "yieldstatement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "scopeargument",
           "named": true
         }
       ]
@@ -513,6 +1550,18 @@
   },
   {
     "type": "!=",
+    "named": false
+  },
+  {
+    "type": "#",
+    "named": false
+  },
+  {
+    "type": "$",
+    "named": false
+  },
+  {
+    "type": "%",
     "named": false
   },
   {
@@ -708,10 +1757,6 @@
     "named": false
   },
   {
-    "type": "?",
-    "named": false
-  },
-  {
     "type": "FALSE",
     "named": false
   },
@@ -730,6 +1775,10 @@
   {
     "type": "and",
     "named": false
+  },
+  {
+    "type": "breakstatement",
+    "named": true
   },
   {
     "type": "by",
@@ -760,6 +1809,10 @@
     "named": false
   },
   {
+    "type": "import",
+    "named": false
+  },
+  {
     "type": "in",
     "named": false
   },
@@ -776,7 +1829,27 @@
     "named": true
   },
   {
+    "type": "punch",
+    "named": false
+  },
+  {
+    "type": "return",
+    "named": false
+  },
+  {
     "type": "true",
+    "named": false
+  },
+  {
+    "type": "try",
+    "named": false
+  },
+  {
+    "type": "unique if",
+    "named": false
+  },
+  {
+    "type": "waitfor",
     "named": false
   },
   {
@@ -788,7 +1861,15 @@
     "named": false
   },
   {
+    "type": "yield",
+    "named": false
+  },
+  {
     "type": "|",
+    "named": false
+  },
+  {
+    "type": "|>",
     "named": false
   },
   {

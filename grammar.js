@@ -1,4 +1,6 @@
 const PREC = {
+  fcall : 21,
+  fcallimp : 20,
   unary : 20,
   mult : 19,
   addtv : 19,
@@ -19,16 +21,17 @@ module.exports = grammar({
     [$._additiveoperator],
     [$.tupleconcat],
     [$.tupleconcat, $._additiveoperator],
+    [$._statement, $._exspression]
   ],
 
   rules: {
 
     start: $ => optional($._codeblocks),
 
-    _codeblocks: $ => repeat1(seq(
+    _codeblocks: $ => seq(repeat($._comment),repeat1(seq(
       $._statement,
       repeat(choice($._lineterminatorsequence, $._lineterminator, $._SEMICOLON))
-      )), 
+      ))), 
 
 /**************************CODE BLOCK INSTRUCTIONS*****************************/
     _statement: $ => seq(
@@ -38,19 +41,30 @@ module.exports = grammar({
         $.whilestatement,
         $.forstatement,
         $.assignmentexpression,
-        $.assertionstatement
+        $.assertionstatement,
+        $.fcallexplicit,
+        $.fcallimplicit,
+        $.fpipestatement,
+        $.returnstatement,
+        $.punchstatement,
+        $.importstatement,
+        $.waitforstatement,
+        $.yieldstatement,
+        $.breakstatement,
+        $.trystatement
+        //$.scopedeclaration
         ),
-      //repeat($._comment)
+      repeat($._comment)
     ),
 
     ifstatement: $ => seq(
-      'if',
+      choice('if', 'unique if'),
       $._exspression,
-      $.scopedeclaration,
+      $.scopedec_compound_statement,
       repeat(seq(
         'elif',
         $._exspression,
-        $.scopedeclaration)),
+        $.scopedec_compound_statement)),
       optional(
         $.scopeelse),
     ),
@@ -58,25 +72,25 @@ module.exports = grammar({
     whilestatement: $ => seq(
       'while',
       $._exspression,
-      $.scopedeclaration
+      $.scopedec_compound_statement
     ),
 
     forstatement: $ => prec.left(seq(
       'for',
       $.identifier,
       'in', 
-      choice($.tuplenotation, $.rangenotation),
+      choice($._tuplenotation, $.rangenotation),
       repeat(seq(
         $._SEMICOLON,  
         $.identifier,
         'in', 
-        choice($.tuplenotation, $.rangenotation))),
-      $.scopedeclaration
+        choice($._tuplenotation, $.rangenotation))),
+      $.scopedec_compound_statement
     )),
 
     assignmentexpression: $ => seq(
       choice(
-        //$.overloadnotation,
+        $.overloadnotation,
         $._exspression),
       $.assignmentoperator,
       choice($._exspression, $.scopedeclaration) // add fcallimplicit
@@ -84,11 +98,67 @@ module.exports = grammar({
 
     assertionstatement: $ => seq('I(',$._exspression,')'),
 
+    fcallexplicit: $ => prec.left(PREC.fcall,seq(
+      $._tupledotnotation,
+      $.scopeargument,
+      optional($.scopedeclaration),
+      optional(seq('.', choice($.fcallexplicit, $._tupledotnotation))),
+      optional($.funcpipe)
+    )),
 
+    fcallimplicit: $ => prec.left(PREC.fcallimp,seq(
+      $._tupledotnotation,
+      optional($.scopedeclaration),
+      optional($.funcpipe)
+    )),
+
+    funcpipe: $ => seq(
+      '|>', 
+      choice($.fcallexplicit, $.fcallimplicit)
+    ),
+
+    fpipestatement: $ => seq(
+      $._tuplenotation,
+      '|>', 
+      choice($.fcallexplicit, $.fcallimplicit)
+    ),
+
+    returnstatement: $ => seq('return', $._exspression),
+
+    breakstatement: $ => 'break',
+
+    punchstatement: $ => seq(
+      'punch',
+      '(',
+      $._stringconstant,
+      ')',
+    ),
+
+    importstatement: $ => seq(
+      'import',
+      '(',
+      $._stringconstant,
+      ')',
+    ),
+
+    trystatement: $ => seq(
+      'try',
+      $.scopedec_compound_statement
+    ),
+
+    yieldstatement: $ => seq(
+      'yield',
+      $.scopeargument
+    ),
+
+    waitforstatement: $ => seq(
+      'waitfor',
+      $.scopeargument
+    ),
 /************************** SCOPE DECLARATIONS ********************************/
     scopedeclaration: $ => seq(
       choice(
-        optional(seq(':',optional($.scopeargument),':')),
+        seq(':',optional($.scopeargument),':'),
         optional($._exspression)),
       $._LBRACE,
       choice($._codeblocks, $._exspression),
@@ -99,7 +169,7 @@ module.exports = grammar({
     scopeelse: $ => seq(
       'else',
       $._LBRACE,
-      $._codeblocks,
+      choice($._codeblocks, $._exspression),
       $._RBRACE
       ),
 
@@ -124,18 +194,17 @@ module.exports = grammar({
       $.unaryoperator,
       $.binaryoperator,
       $.tupleconcat,
-      $.tuplenotation,
+      $._tuplenotation,
       $.rangenotation,
+      $.fcallexplicit,
+      $.punchstatement,
+      $.importstatement
     ),
 
     unaryoperator: $ => prec.left(PREC.unary,choice(
       seq(
         choice('not' ,'!', '~'),
-        $._exspression),
-      seq(
-        $._exspression,
-        token.immediate('?'))
-      )),
+        $._exspression))),
 
     binaryoperator: $ => choice(
       prec(PREC.logical,seq(
@@ -207,30 +276,31 @@ module.exports = grammar({
 
 /************************* RANGE NOTATION ***********************/
 
-    rangenotation: $ => prec.left(1,seq(
+    rangenotation: $ => prec.right(2,seq(
       optional($._lhsvarname),
       '..',
       optional(choice($._additiveoperator, $._bitselectionnotation)),
-      optional($._tupleby)
+      optional($.tupleby)
     )),
     
 /************************* TUPLE NOTATION ***********************/
 
-    tuplenotation: $ => prec.left(choice(
+    _tuplenotation: $ => prec.left(choice(
       seq(
         '(',
-        choice($._exspression, $.assignmentexpression),
+        optional(choice($._exspression, $.assignmentexpression)),
         repeat(seq(/,+/, choice($._exspression, $.assignmentexpression))),
         /,*/,
         ')',
-        optional(choice($._bitselectionbracket, $._tupleby))
+        optional(choice($._bitselectionbracket)),
+        optional($.funcpipe)
         ),
-      $._bitselectionnotation
+      seq($._bitselectionnotation, optional($.funcpipe))
     )),
 
-    _tupleby: $ => seq('by', $._lhsvarname),
+    tupleby: $ => seq('by', $._lhsvarname),
 
-    _bitselectionnotation: $ => seq($._tupledotnotation, optional($._bitselectionbracket)),
+    _bitselectionnotation: $ => prec.right(seq($._tupledotnotation, optional($._bitselectionbracket))),
     _bitselectionbracket: $ => repeat1(seq($._LLBRK, optional($._exspression), $._RRBRK)),
 
     _tupledotnotation: $ => seq(
@@ -240,20 +310,25 @@ module.exports = grammar({
 
     _tuplearraynotation: $ => seq(
       $._lhsvarname, 
-      repeat(seq($._LBRK, $._lhsvarname, $._RBRK)) // decimal to expression
+      repeat(seq($._LBRK, $._exspression, $._RBRK)) // decimal to expression
     ),
 
 
     _lhsvarname: $ => prec.right(choice( 
       seq(
-        optional(choice($._input, $._output, $._register)),
+        optional(choice($.input, $.output, $.register)),
         choice($.identifier, $.constant)),
-      choice($._input, $._output, $._register)
+      choice($.input, $.output, $.register)
       )),
 
-    _input: $ => '$',
-    _output: $ => '%',
-    _register: $ => '#',
+    _lhsvarname: $ => prec.right(choice( 
+      $.identifier, $.constant, $.input, $.output, $.register
+      )),
+
+
+    input: $ => prec.right(seq('$', optional(choice($.identifier, $.constant)))),
+    output: $ => prec.right(seq('%', optional(choice($.identifier, $.constant)))),
+    register: $ => prec.right(seq('#', optional(choice($.identifier, $.constant)))),
 
 /*************************** MISC *********************************/
     _LLBRK: $ => '[[',
@@ -266,7 +341,7 @@ module.exports = grammar({
 
 /*************************** OVERLOAD *****************************/
 
-    overloadnotation: $ => prec.right(2,seq(
+    overloadnotation: $ => prec.left(4,seq(
       '..',
       $.overloadname,
       '..'
@@ -277,7 +352,7 @@ module.exports = grammar({
 
 /***************************IDENTIFIER*****************************/
     
-    identifier: $ => /[_]*[a-zA-Z]{1}[a-zA-Z0-9]*/,
+    identifier: $ => /[_]*[a-zA-Z]{1}[a-zA-Z0-9_]*([?]|[!]{0,2})?/,
     //idprefix: $ => /[!-]{1}/,
     //idnondigit: $ => /[a-zA-Z%$#]{1}/,
     //idchar: $ => /[a-zA-Z0-9]{1}/,
@@ -307,14 +382,14 @@ module.exports = grammar({
     ),
 
     //_decimalsigned: $ => /([-]?[0-9]{1}[0-9_]*)(s|u)?([0-9_]+(bit){1}s?)?/,
-    _decimalsigned: $ => /([-]?[0-9]{1}[0-9_]*)(s|u)?[0-9_]+((bit){1}s?)?/,
+    _decimalsigned: $ => /([-]?[0-9]{1}[0-9_]*)(s|u)?[0-9_]*((bit){1}s?)?/,
 
 
     _decimaldigit: $ => /([-]?[0-9]{1}[0-9_]*)/,
 
-    _binary: $ => /0b["0-1_]+(s|u)?[?0-9_]+((bit){1}s?)?/,
+    _binary: $ => /0b["0-1_]+(s|u)?[?0-9_]*((bit){1}s?)?/,
 
-    _hexadecimal: $ => /0x["A-Fa-f0-9_]+(s|u)?[0-9_]+((bit){1}s?)?/,
+    _hexadecimal: $ => /0x["A-Fa-f0-9_]+(s|u)?[0-9_]*((bit){1}s?)?/,
 
 /****************************LINE TERMINATOR*****************************/
     
